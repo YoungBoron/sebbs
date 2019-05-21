@@ -1,10 +1,7 @@
 package com.rgsj3.sebbs.controller;
 
 import com.rgsj3.sebbs.domain.User;
-import com.rgsj3.sebbs.repository.BoardRepository;
-import com.rgsj3.sebbs.repository.TopicRepository;
-import com.rgsj3.sebbs.repository.UserRepository;
-import com.rgsj3.sebbs.repository.ZoneRepository;
+import com.rgsj3.sebbs.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +28,9 @@ public class HomeController {
 
     @Autowired
     TopicRepository topicRepository;
+
+    @Autowired
+    ReplyRepository replyRepository;
 
     /**
      * 首页
@@ -67,12 +67,17 @@ public class HomeController {
     }
 
     @RequestMapping("/topic/{id}")
-    public String topic(Model model, HttpServletRequest httpServletRequest, @PathVariable("id") Integer id) {
+    public String topic(Model model, HttpServletRequest httpServletRequest, @PathVariable("id") Integer id, @RequestParam(value = "start", defaultValue = "0") Integer start) {
         loginUser(model, httpServletRequest);
         var topic = topicRepository.findById(id).get();
         topic.setClick(topic.getClick() + 1);
         topicRepository.save(topic);
         model.addAttribute("topic", topic);
+
+        var pagesize = 1;
+        Pageable pageable = PageRequest.of(start, pagesize);
+        var page = replyRepository.findByTopicOrderByFloorAsc(topic, pageable);
+        model.addAttribute("page", page);
         return "topic";
     }
 
