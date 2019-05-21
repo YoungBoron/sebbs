@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,16 +52,17 @@ public class HomeController {
      * @param httpServletRequest
      * @return
      */
-    @RequestMapping("/board/{id}/{page}")
-    public String board(Model model, HttpServletRequest httpServletRequest, @PathVariable("id") Integer id, @PathVariable("page") Integer page) {
+    @RequestMapping("/board/{id}")
+    public String board(Model model, HttpServletRequest httpServletRequest, @PathVariable("id") Integer id, @RequestParam(value = "start", defaultValue = "0") Integer start) {
         loginUser(model, httpServletRequest);
         var board = boardRepository.findById(id).get();
         model.addAttribute("board", board);
-        Sort sort = new Sort(Sort.Direction.DESC, "replyDate");
-        Pageable pageable = new PageRequest(page, 2, sort);
-        //var topicList = topicRepository.findByBoardOrderByReplyDateDesc(board);
-        var topicList = topicRepository.findByBoard(board, pageable);
-        model.addAttribute("topicList", topicList);
+
+        var pagesize = 1;
+
+        Pageable pageable = PageRequest.of(start, pagesize);
+        var page = topicRepository.findByBoardOrderByReplyDateDesc(board, pageable);
+        model.addAttribute("page", page);
         return "board";
     }
 

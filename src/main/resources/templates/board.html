@@ -113,6 +113,7 @@
         </li>
     </ul>
     <nav aria-label="Page navigation">
+        <input type="hidden" id="page" th:value="${page.getNumber()}" value="0"/>
         <ul class="pagination">
             <li>
                 <a th:href="@{'../board/'+ ${board.getId()} + '?start=0'}" aria-label="Previous">
@@ -171,7 +172,7 @@
 
 
             <li>
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=' + ${page.getTotalPages()-1}}">
+                <a th:href="@{'../board/'+ ${board.getId()} + '?start=' + ${page.getTotalPages()-1}}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

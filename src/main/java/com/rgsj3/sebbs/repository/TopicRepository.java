@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface TopicRepository extends JpaRepository<Topic, Integer> {
     public List<Topic> findByBoardOrderByReplyDateDesc(Board board);
-    public Page<Topic> findByBoard(Board board, Pageable pageable);
+    public Page<Topic> findByBoardOrderByReplyDateDesc(Board board, Pageable pageable);
 }
