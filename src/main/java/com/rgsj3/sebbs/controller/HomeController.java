@@ -1,10 +1,7 @@
 package com.rgsj3.sebbs.controller;
 
 import com.rgsj3.sebbs.repository.*;
-import com.rgsj3.sebbs.service.ReplyService;
-import com.rgsj3.sebbs.service.TopicService;
-import com.rgsj3.sebbs.service.UserService;
-import com.rgsj3.sebbs.service.ZoneService;
+import com.rgsj3.sebbs.service.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -30,6 +27,9 @@ public class HomeController {
 
     @Resource
     ReplyService replyService;
+
+    @Resource
+    FileService fileService;
 
     @RequestMapping("/home")
     public String home(Model model,
@@ -61,7 +61,15 @@ public class HomeController {
 
     @RequestMapping("/self")
     public String self(Model model, HttpServletRequest httpServletRequest) {
+        userService.loginUser(model, httpServletRequest);
+
         return "self";
     }
 
+    @RequestMapping("/download")
+    public String download(Model model, HttpServletRequest httpServletRequest){
+        userService.loginUser(model, httpServletRequest);
+        fileService.listFile(model);
+        return "/download";
+    }
 }

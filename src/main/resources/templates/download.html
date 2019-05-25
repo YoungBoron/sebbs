@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="multipart/form-data; IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>个人信息</title>
+    <title>软件工程论坛</title>
     <!-- Bootstrap -->
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
@@ -36,13 +36,13 @@
                 <li><a href="/home">软件工程论坛首页</a></li>
             </ul>
             <ul class="nav navbar-nav">
-                <li><a href="/download">资料下载</a></li>
+                <li class="active"><a href="/download">资料下载</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li th:if="${userId == null}">
+                <li th:if="${user == null}">
                     <button class="btn btn-primary navbar-btn" type="button" data-toggle="modal" data-target="#myModal">登录</button>
                 </li>
-                <li class="dropdown" th:if="${userId != null}">
+                <li class="dropdown" th:if="${user != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">[[${user.name}]]<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="/self">个人信息</a></li>
@@ -88,34 +88,14 @@
         </div>
     </div>
 </div>
+
 <div class="container">
-    <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a href="#">个人信息</a></li>
-        <li role="presentation"><a href="/course">课程</a></li>
-    </ul>
-    <br/>
-    <form>
+    <form id="addFileForm">
         <div class="form-group">
-            <label>学工号</label>
-                <p class="form-control-static">123456</p>
+            <label for="file">上传文件</label>
+            <input type="file" id="file" name="file"/>
         </div>
-        <div class="form-group">
-            <label for="userName">姓名</label>
-            <input type="text" class="form-control" id="userName" placeholder="姓名">
-        </div>
-        <div class="form-group">
-            <label for="userEmail">电子邮箱</label>
-            <input type="email" class="form-control" id="userEmail" placeholder="电子邮箱">
-        </div>
-        <div class="form-group">
-            <label for="userPassword">密码</label>
-            <input type="password" class="form-control" id="userPassword" placeholder="密码不改就留空">
-        </div>
-        <div class="form-group">
-            <label for="userPassword2">重复密码</label>
-            <input type="password" class="form-control" id="userPassword2" placeholder="密码不改就留空">
-        </div>
-        <button type="submit" class="btn btn-default">提交</button>
+        <button type="button" class="btn btn-default" id="addFile">Submit</button>
     </form>
 </div>
 
@@ -125,5 +105,6 @@
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 <script src="/home.js"></script>
+<script src="/download.js"></script>
 </body>
 </html>
