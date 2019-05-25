@@ -10,12 +10,21 @@ public class User {
     @GeneratedValue
     private Integer id;
 
+    private String number;
     private String name;
     private String password;
     private String email;
     private String sex;
     private Integer power;
     private String type;
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
     public Integer getId() {
         return id;

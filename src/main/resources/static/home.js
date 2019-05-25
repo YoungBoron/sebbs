@@ -2,11 +2,13 @@ $("#login").click(function() {
     $.post("/login", {
         name : $("#name").val(),
         password : $("#password").val()
-    }, function(data, status) {
-        if (data == "true") {
+    }, function(data) {
+        //alert(data);
+        if (data.code == 0) {
+            //alert("成功")
             location.reload()
         } else {
-            alert("用户名或密码错误");
+            alert(data.msg);
             $("#loginForm").children("div").attr("class", "form-group has-error");
         }
         //alert("数据: \n" + data + "\n状态: " + status);
@@ -15,12 +17,12 @@ $("#login").click(function() {
 $("#logout").click(function() {
     $.post("/logout", {
 
-    }, function(data, status) {
-        if (data == "true") {
+    }, function(data) {
+        if (data.code == 0) {
             location.reload()
         } else {
             alert("无法登出");
         }
         //alert("数据: \n" + data + "\n状态: " + status);
-    });
+    }, "json");
 });

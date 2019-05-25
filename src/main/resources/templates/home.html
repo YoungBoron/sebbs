@@ -39,12 +39,14 @@
                     <li><a href="/home">资料下载</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li th:if="${userId == null}">
+                    <li th:if="${user == null}">
                         <button class="btn btn-primary navbar-btn" type="button" data-toggle="modal" data-target="#myModal">登录</button>
                     </li>
-                    <li class="dropdown" th:if="${userId != null}">
+                    <li class="dropdown" th:if="${user != null}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">[[${user.name}]]<span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li><a href="/self">个人信息</a></li>
+                            <li><a href="/course">我的课程</a></li>
                             <li><a href="#" id="logout">登出</a></li>
                         </ul>
                     </li>
@@ -111,6 +113,8 @@
             </tr>
         </table>
     </div>
+<!--    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+    </script>-->
     <script
             src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
