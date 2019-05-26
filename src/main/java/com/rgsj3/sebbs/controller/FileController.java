@@ -2,7 +2,6 @@ package com.rgsj3.sebbs.controller;
 
 import com.rgsj3.sebbs.domain.Result;
 import com.rgsj3.sebbs.service.FileService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,12 +17,8 @@ public class FileController {
     FileService fileService;
 
     @RequestMapping("/add/file")
-    public String addFile(@RequestParam("file") MultipartFile multipartFile,
+    public Result addFile(@RequestParam("file") MultipartFile multipartFile,
                           HttpServletRequest httpServletRequest){
-        Result result = fileService.addFile(multipartFile, httpServletRequest);
-        if (result.getCode() == 0)
-            return "download";
-        else
-            return "home";
+        return fileService.addFile(multipartFile, httpServletRequest);
     }
 }

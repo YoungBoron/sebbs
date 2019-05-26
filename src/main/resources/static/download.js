@@ -17,8 +17,10 @@ $("#addFile").click(function() {
         data: formData,
         url: "/add/file",
         contentType: false,
-        processData: false
+        processData: false,
+        dataType: "json"
     }).success(function (data) {
+        //alert('成功' + data.code)
         if (data.code == 0) {
             alert("上传成功");
             location.reload()
@@ -27,7 +29,7 @@ $("#addFile").click(function() {
         }
 
     }).error(function (data) {
-        alert(data);
+        alert(data.msg);
         console.log(data);
     });
 

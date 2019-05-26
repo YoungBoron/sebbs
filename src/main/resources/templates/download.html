@@ -90,12 +90,24 @@
 </div>
 
 <div class="container">
+    <ul class="list-group" th:each="file : ${fileList}">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-6 col-xs-6">
+                    <a th:text="${file.name}">文件名</a>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                    <p th:text="${file.path}">文件地址</p>
+                </div>
+            </div>
+        </li>
+    </ul>
     <form id="addFileForm">
         <div class="form-group">
             <label for="file">上传文件</label>
             <input type="file" id="file" name="file"/>
         </div>
-        <button type="button" class="btn btn-default" id="addFile">Submit</button>
+        <button type="button" class="btn btn-default" id="addFile">上传</button>
     </form>
 </div>
 
