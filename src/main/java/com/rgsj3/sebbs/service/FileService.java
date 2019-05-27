@@ -3,6 +3,7 @@ package com.rgsj3.sebbs.service;
 import com.rgsj3.sebbs.domain.Result;
 import com.rgsj3.sebbs.domain.User;
 import com.rgsj3.sebbs.repository.FileRepository;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -14,8 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.util.Date;
-import java.util.List;
-import org.slf4j.Logger;
 
 @Service
 public class FileService {
@@ -71,10 +70,9 @@ public class FileService {
             response.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(fileName, "UTF-8"));
 
             byte[] buffer = new byte[1024];
-            FileInputStream fis = null; //文件输入流
-            BufferedInputStream bis = null;
-
-            OutputStream os = null; //输出流
+            FileInputStream fis; //文件输入流
+            BufferedInputStream bis;
+            OutputStream os; //输出流
             try {
                 os = response.getOutputStream();
                 fis = new FileInputStream(dest);
@@ -84,17 +82,11 @@ public class FileService {
                     os.write(buffer);
                     i = bis.read(buffer);
                 }
-
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            System.out.println("----------file download" + fileName);
-            try {
+                LOGGER.info("----------file download" + fileName);
                 bis.close();
                 fis.close();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
