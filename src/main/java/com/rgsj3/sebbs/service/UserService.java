@@ -43,4 +43,21 @@ public class UserService {
             model.addAttribute("user", null);
         }
     }
+    
+     public Result modifyInfo(String userName, String userEmail, String userPassword, HttpServletRequest httpServletRequest){
+        var session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("user");
+        user.setEmail(userEmail);
+        user.setName(userName);
+        if (userPassword.length() != 0)
+            user.setPassword(userPassword);
+        if(userRepository.save(user) != null){
+            session.setAttribute("user",user);
+            System.out.println(user.toString()+" " + user.getName());
+            return Result.success();
+        }
+        else
+            return Result.error(1,"修改出错");
+    }
+    
 }

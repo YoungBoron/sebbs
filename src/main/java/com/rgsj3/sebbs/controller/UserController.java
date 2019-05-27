@@ -27,5 +27,22 @@ public class UserController {
     public Result logout(HttpServletRequest httpServletRequest) {
         return userService.logout(httpServletRequest);
     }
+    
+     @RequestMapping("/modify")
+    public Result modifyUserInfo(@RequestBody Map<String,String> map,
+                                 HttpServletRequest httpServletRequest){
+        String userName = map.get("userName");
+        String userEmail = map.get("userEmail");
+        String userPassword = map.get("userPassword");
+        String userPassword2 = map.get("userPassword2");
+
+        if(userName.length() == 0)
+            return Result.error(1,"姓名为空");
+        else if(userEmail.length() == 0)
+            return Result.error(2,"email为空");
+        else if((userPassword.length()!=0 || userPassword2.length() !=0) && !userPassword.equals(userPassword2))
+            return Result.error(3,"密码不同");
+        return userService.modifyInfo(userName, userEmail, userPassword,httpServletRequest);
+    }
 
 }
