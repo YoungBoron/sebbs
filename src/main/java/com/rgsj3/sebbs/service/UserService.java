@@ -1,6 +1,7 @@
 package com.rgsj3.sebbs.service;
 
 import com.rgsj3.sebbs.domain.Result;
+import com.rgsj3.sebbs.domain.User;
 import com.rgsj3.sebbs.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;

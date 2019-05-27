@@ -17,8 +17,8 @@ $("#submitUserInfo").click(function() {
         },
         success: function(data) {
             if (data.code == 0) {
-            alert(data.msg)
-            // location.reload()
+                alert(data.msg);
+                location.reload();
             }
             else
                 alert(data.msg);
