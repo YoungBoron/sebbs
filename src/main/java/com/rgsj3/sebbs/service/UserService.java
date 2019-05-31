@@ -1,19 +1,35 @@
 package com.rgsj3.sebbs.service;
 
+import com.rgsj3.sebbs.domain.Course;
 import com.rgsj3.sebbs.domain.Result;
+import com.rgsj3.sebbs.domain.StudentCourse;
 import com.rgsj3.sebbs.domain.User;
+import com.rgsj3.sebbs.repository.CourseRepository;
+import com.rgsj3.sebbs.repository.StudentCourseRepository;
 import com.rgsj3.sebbs.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+
     @Resource
     UserRepository userRepository;
+
+    @Resource
+    CourseRepository courseRepository;
+
+    @Resource
+    StudentCourseRepository studentCourseRepository;
 
     public Result login(String name, String password, HttpServletRequest httpServletRequest) {
         var userList = userRepository.findByName(name);
@@ -44,8 +60,8 @@ public class UserService {
             model.addAttribute("user", null);
         }
     }
-    
-     public Result modifyInfo(String userName, String userEmail, String userPassword, HttpServletRequest httpServletRequest){
+
+    public Result modifyInfo(String userName, String userEmail, String userPassword, HttpServletRequest httpServletRequest){
         var session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         user.setEmail(userEmail);
@@ -60,12 +76,9 @@ public class UserService {
         else
             return Result.error(1,"修改出错");
     }
-    
-     public void courseManagement(Model model, HttpServletRequest httpServletRequest){
-        User user = (User) httpServletRequest.getSession().getAttribute("user");
-        if(user.getType() != null && user.getType().equals("teacher")){
 
-        }
+    public void courseManagement(Model model, HttpServletRequest httpServletRequest){
+        User user = (User) httpServletRequest.getSession().getAttribute("user");
 
         List<Course> courseList = courseRepository.findAllByTeacherIs(user);
         for (Course c:courseList){
@@ -77,5 +90,5 @@ public class UserService {
         model.addAttribute("courseList",courseList);
 
     }
-    
+
 }
