@@ -62,7 +62,9 @@ public class HomeController {
     @RequestMapping("/self")
     public String self(Model model, HttpServletRequest httpServletRequest) {
         userService.loginUser(model, httpServletRequest);
-
+        if (httpServletRequest.getSession().getAttribute("user") == null) {
+            return "redirect:/home";
+        }
         return "self";
     }
 
@@ -73,7 +75,6 @@ public class HomeController {
         return "/download";
     }
 
-
     @RequestMapping("/course")
     public String course(Model model, HttpServletRequest httpServletRequest) {
         userService.loginUser(model, httpServletRequest);
@@ -83,5 +84,4 @@ public class HomeController {
         userService.courseManagement(model,httpServletRequest);
         return "course";
     }
-
 }
