@@ -74,4 +74,13 @@ public class HomeController {
         fileService.listFile(model);
         return "/download";
     }
+
+    @RequestMapping("/course")
+    public String course(Model model, HttpServletRequest httpServletRequest) {
+        userService.loginUser(model, httpServletRequest);
+        if (httpServletRequest.getSession().getAttribute("user") == null) {
+            return "redirect:/home";
+        }
+        return "course";
+    }
 }
