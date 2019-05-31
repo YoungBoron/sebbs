@@ -81,6 +81,7 @@ public class HomeController {
         if (httpServletRequest.getSession().getAttribute("user") == null) {
             return "redirect:/home";
         }
+        userService.courseManagement(model,httpServletRequest);
         return "course";
     }
 }
