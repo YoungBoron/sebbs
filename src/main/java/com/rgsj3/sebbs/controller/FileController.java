@@ -25,7 +25,7 @@ public class FileController {
         return fileService.addFile(multipartFile, httpServletRequest);
     }
 
-    @RequestMapping("download/{id}")
+    @RequestMapping("/download/{id}")
     public String downLoadFile(HttpServletResponse response,
                            @PathVariable("id") Integer id) throws UnsupportedEncodingException {
         return fileService.downloadFile(response, id);
