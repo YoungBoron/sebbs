@@ -15,6 +15,7 @@ public class Topic {
     private Date replyDate;
     private Integer floor;
     private Integer click;
+    private Boolean best;
 
     @ManyToOne(targetEntity = User.class)
     private User user;
@@ -109,5 +110,13 @@ public class Topic {
 
     public void setReplyUser(User replyUser) {
         this.replyUser = replyUser;
+    }
+
+    public Boolean getBest() {
+        return best;
+    }
+
+    public void setBest(Boolean best) {
+        this.best = best;
     }
 }
