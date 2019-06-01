@@ -9,7 +9,7 @@ $("#login").click(function() {
             location.reload()
         } else {
             alert(data.msg);
-            $("#loginForm").children("div").attr("class", "form-group has-error");
+            $("#loginForm").find("input").attr("class", "form-control is-invalid");
         }
         //alert("数据: \n" + data + "\n状态: " + status);
     });
