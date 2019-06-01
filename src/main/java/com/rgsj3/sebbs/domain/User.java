@@ -1,8 +1,10 @@
 package com.rgsj3.sebbs.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.hibernate.annotations.Fetch;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -17,6 +19,12 @@ public class User {
     private String sex;
     private Integer power;
     private String type;
+
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
+    private Set<Course> courseSet = new HashSet<>();
+
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
+    private Set<StudentCourse> studentCourses = new HashSet<>();
 
     public String getNumber() {
         return number;
@@ -80,6 +88,22 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Set<Course> getCourseSet() {
+        return courseSet;
+    }
+
+    public void setCourseSet(Set<Course> courseSet) {
+        this.courseSet = courseSet;
+    }
+
+    public Set<StudentCourse> getStudentCourses() {
+        return studentCourses;
+    }
+
+    public void setStudentCourses(Set<StudentCourse> studentCourses) {
+        this.studentCourses = studentCourses;
     }
 
     public User() {

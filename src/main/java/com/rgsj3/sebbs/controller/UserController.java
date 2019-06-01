@@ -47,4 +47,11 @@ public class UserController {
         return userService.modifyInfo(userName, userEmail, userPassword,httpServletRequest);
     }
 
+    @RequestMapping("/set/score")
+    public Result setScore(@RequestParam("id") Integer id,
+                           @RequestParam("score") Double score,
+                           HttpServletRequest httpServletRequest){
+        return userService.setScore(id,score);
+    }
+
 }

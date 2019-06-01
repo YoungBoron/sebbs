@@ -1,9 +1,8 @@
 package com.rgsj3.sebbs.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Course {
@@ -25,6 +24,9 @@ public class Course {
 
     @ManyToOne(targetEntity = User.class)
     private User teacher;
+
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
+    private Set<StudentCourse> studentCourses = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -48,6 +50,14 @@ public class Course {
 
     public void setTeacher(User teacher) {
         this.teacher = teacher;
+    }
+
+    public Set<StudentCourse> getStudentCourses() {
+        return studentCourses;
+    }
+
+    public void setStudentCourses(Set<StudentCourse> studentCourses) {
+        this.studentCourses = studentCourses;
     }
 
     public Course() {

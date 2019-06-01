@@ -42,7 +42,7 @@ public class FileService {
             String fileName = multipartFile.getOriginalFilename();
             LOGGER.info(fileName);
             String filePath = "C:/Users/Public/sebbs/";
-            java.io.File dest = new java.io.File(filePath + fileName + "_" + date.getTime());
+            File dest = new File(filePath + fileName + "_" + date.getTime());
             try {
                 if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
                     dest.getParentFile().mkdir();
@@ -64,7 +64,7 @@ public class FileService {
     public String downloadFile(HttpServletResponse response, Integer id) throws UnsupportedEncodingException {
         var file = fileRepository.findById(id).get();
         String fileName= file.getName();
-        java.io.File dest = new java.io.File(file.getPath());
+        File dest = new File(file.getPath());
         if(dest.exists()){ //判断文件父目录是否存在
             response.setContentType("application/force-download");
             response.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(fileName, "UTF-8"));

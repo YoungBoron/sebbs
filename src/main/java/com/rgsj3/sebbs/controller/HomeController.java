@@ -81,7 +81,7 @@ public class HomeController {
         if (httpServletRequest.getSession().getAttribute("user") == null) {
             return "redirect:/home";
         }
-        userService.courseManagement(model,httpServletRequest);
+        userService.courseManagement(model,httpServletRequest,-1);
         return "course";
     }
 
@@ -93,7 +93,7 @@ public class HomeController {
         if (httpServletRequest.getSession().getAttribute("user") == null) {
             return "redirect:/home";
         }
-        userService.courseManagement(model,httpServletRequest);
+        userService.courseManagement(model,httpServletRequest, id);
         //TODO 处理学生列表
         return "course";
     }

@@ -51,6 +51,16 @@ public class StudentCourse {
         this.student = student;
     }
 
+    @Override
+    public String toString() {
+        return "StudentCourse{" +
+                "id=" + id +
+                ", score=" + score +
+                ", course=" + course +
+                ", student=" + student +
+                '}';
+    }
+
     public StudentCourse() {
     }
 }

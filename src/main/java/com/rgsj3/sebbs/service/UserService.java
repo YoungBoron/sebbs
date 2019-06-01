@@ -13,9 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import javax.annotation.Resource;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -70,25 +73,45 @@ public class UserService {
             user.setPassword(userPassword);
         if(userRepository.save(user) != null){
             session.setAttribute("user",user);
-            System.out.println(user.toString()+" " + user.getName());
             return Result.success();
         }
         else
             return Result.error(1,"修改出错");
     }
 
-    public void courseManagement(Model model, HttpServletRequest httpServletRequest){
+    public void courseManagement(Model model, HttpServletRequest httpServletRequest, Integer id){
         User user = (User) httpServletRequest.getSession().getAttribute("user");
 
-        List<Course> courseList = courseRepository.findAllByTeacherIs(user);
-        for (Course c:courseList){
-            Integer num = studentCourseRepository.countByCourse(c);
-            c.setStuNumber(num);
-            courseRepository.save(c);
+        if(user.getType().equals("teacher")){
+
+            Set<Course> courseSet = user.getCourseSet();
+            model.addAttribute("courseSet",courseSet);
+            if (id != -1){
+                Course course = courseRepository.getById(id);
+                Set<StudentCourse> studentCourseSet = course.getStudentCourses();
+                model.addAttribute("studentCourseSet",studentCourseSet);
+            }
+
+
+        }else if (user.getType().equals("student")){
+            Set<StudentCourse> studentCourseSet = user.getStudentCourses();
+            Set<Course> courseSet = new HashSet<>();
+            for (StudentCourse s: studentCourseSet){
+                courseSet.add(s.getCourse());
+            }
+            model.addAttribute("courseSet",courseSet);
         }
 
-        model.addAttribute("courseList",courseList);
+    }
 
+    public Result setScore(Integer id, Double score){
+        StudentCourse studentCourse = studentCourseRepository.getById(id);
+        studentCourse.setScore(score);
+        if(studentCourseRepository.save(studentCourse) != null){
+            return Result.success();
+        }
+        else
+            return Result.error(1,"修改出错");
     }
 
 }
