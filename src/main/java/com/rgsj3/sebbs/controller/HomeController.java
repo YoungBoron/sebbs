@@ -84,4 +84,17 @@ public class HomeController {
         userService.courseManagement(model,httpServletRequest);
         return "course";
     }
+
+    @RequestMapping("/course/{id}")
+    public String course(Model model,
+                         HttpServletRequest httpServletRequest,
+                         @PathVariable("id") Integer id) {
+        userService.loginUser(model, httpServletRequest);
+        if (httpServletRequest.getSession().getAttribute("user") == null) {
+            return "redirect:/home";
+        }
+        userService.courseManagement(model,httpServletRequest);
+        //TODO 处理学生列表
+        return "course";
+    }
 }

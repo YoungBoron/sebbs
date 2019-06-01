@@ -3,12 +3,12 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #url: jdbc:mysql://rm-wz9bh11l2h805c1d8ko.mysql.rds.aliyuncs.com:3306/sebbs?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
-    #username: ypy
-    #password: ZEwvLKFM4upHLEV
-    url: jdbc:mysql://localhost:3306/sebbs?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: root
+    url: jdbc:mysql://rm-wz9bh11l2h805c1d8ko.mysql.rds.aliyuncs.com:3306/sebbs?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    username: ypy
+    password: ZEwvLKFM4upHLEV
+    #url: jdbc:mysql://localhost:3306/sebbs?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    #username: root
+    #password: root
   jpa:
     hibernate:
       ddl-auto: update

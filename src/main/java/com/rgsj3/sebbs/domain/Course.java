@@ -13,6 +13,15 @@ public class Course {
     private Integer id;
 
     private String name;
+    private Integer stuNumber;
+
+    public Integer getStuNumber() {
+        return stuNumber;
+    }
+
+    public void setStuNumber(Integer stuNumber) {
+        this.stuNumber = stuNumber;
+    }
 
     @ManyToOne(targetEntity = User.class)
     private User teacher;
