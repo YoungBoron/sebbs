@@ -8,7 +8,6 @@
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    <![endif]-->
 </head>
 <body>
     <!-- Fixed navbar -->
@@ -83,7 +82,45 @@
             </div>
         </div>
     </div>
+
+    <!-- 轮播 -->
+    <div class="container">
+        <div id="demo" class="carousel slide" data-ride="carousel">
+
+            <!-- 指示符 -->
+            <ul class="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                <li data-target="#demo" data-slide-to="1"></li>
+                <li data-target="#demo" data-slide-to="2"></li>
+            </ul>
+
+            <!-- 轮播图片 -->
+            <center>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="https://static.runoob.com/images/mix/img_fjords_wide.jpg">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="https://static.runoob.com/images/mix/img_nature_wide.jpg">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="https://static.runoob.com/images/mix/img_mountains_wide.jpg">
+                    </div>
+                </div>
+            </center>
+            <!-- 左右切换按钮 -->
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+
+        </div>
+    </div>
+
     <br/>
+
     <!-- Zone -->
     <div class="container" th:each="zone : ${zoneList}">
         <center>
@@ -97,6 +134,7 @@
                         <p class="card-text" th:text="${board.description}">简介</p>
                     </div>
                 </div>
+                <br/>
             </div>
         </div>
     </div>
