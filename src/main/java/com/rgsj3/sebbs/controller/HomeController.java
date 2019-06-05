@@ -72,7 +72,7 @@ public class HomeController {
     public String download(Model model, HttpServletRequest httpServletRequest){
         userService.loginUser(model, httpServletRequest);
         fileService.listFile(model);
-        return "/download";
+        return "download";
     }
 
     @RequestMapping("/course")
