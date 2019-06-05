@@ -114,66 +114,17 @@
         </li>
     </ul>
     <nav aria-label="Page navigation">
-        <input type="hidden" id="page" th:value="${page.getNumber()}" value="0"/>
         <ul class="pagination">
-            <li>
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=0'}" aria-label="Previous">
+            <li th:if="${start} gt 0">
+                <a href="#" aria-label="Previous" th:href="'/board/' + ${board.id} + '?start=0'">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li th:if="${page.getNumber() > 2 && page.getTotalPages() > 5 && page.getNumber() < page.getTotalPages() - 3}">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=' + ${page.getNumber()-2}}" th:text="${page.getNumber()-1}"></a>
+            <li th:each="pageN : ${pageNum}" th:class="${pageN} eq ${start} ? 'active' : ''">
+                <a th:href="'/board/' + ${board.id} + '?start=' + ${pageN}" th:text="${pageN + 1}"></a>
             </li>
-            <li th:if="${ page.getTotalPages() > 5 && page.getNumber() >= page.getTotalPages() - 3}">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=' + ${page.getTotalPages() - 5}}" th:text="${page.getTotalPages() - 4}"></a>
-            </li>
-            <li th:if="${page.getTotalPages() <= 5  || page.getNumber() < 3 }">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=0'}" >1</a>
-            </li>
-
-            <li th:if="${page.getNumber() > 2 && page.getTotalPages() > 5 && page.getNumber() < page.getTotalPages() - 3}">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=' + ${page.getNumber()-1}} " th:text="${page.getNumber()}"></a>
-            </li>
-            <li th:if="${ page.getTotalPages() > 5 && page.getNumber() >= page.getTotalPages() - 3}">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=' + ${page.getTotalPages() - 4}}" th:text="${page.getTotalPages() - 3}"></a>
-            </li>
-            <li th:if="${page.getTotalPages() <= 5 && page.getNumber() > 1 || page.getNumber() < 3 }">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=1'} ">2</a>
-            </li>
-
-            <li th:if="${page.getNumber() > 2 && page.getTotalPages() > 5 && page.getNumber() < page.getTotalPages() - 3}">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=' + ${page.getNumber()}}" th:text="${page.getNumber()+1}"></a>
-            </li>
-            <li th:if="${page.getTotalPages() > 5 && page.getNumber() >= page.getTotalPages() - 3}">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=' + ${page.getTotalPages() - 3}}" th:text="${page.getTotalPages() - 2}"></a>
-            </li>
-            <li th:if="${page.getTotalPages() <= 5 && page.getTotalPages() >= 3 || page.getTotalPages() > 5 && page.getNumber() < 3 }">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=2'}">3</a>
-            </li>
-
-            <li th:if="${page.getTotalPages() <= 5 && page.getTotalPages() >= 4 || page.getTotalPages() > 5 && page.getNumber() <= 2}">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=3'}">4</a>
-            </li>
-            <li th:if="${page.getTotalPages() > 5 && page.getNumber() > 2 && page.getNumber() < page.getTotalPages() -3 }">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=' + ${page.getNumber()+1}}" th:text="${page.getNumber()+2}"></a>
-            </li>
-            <li th:if="${page.getTotalPages() > 5 && page.getNumber() >= page.getTotalPages() -3 }">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=' + ${page.getTotalPages()-2}}" th:text="${page.getTotalPages()-1}"></a>
-            </li>
-
-            <li th:if="${page.getTotalPages() == 5  || page.getTotalPages() > 5 && page.getNumber() <= 2}">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=4'}">5</a>
-            </li>
-            <li th:if="${page.getTotalPages() > 5 && page.getNumber() > 2 && page.getNumber() < page.getTotalPages() -3 }">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=' + ${page.getNumber()+2}}" th:text="${page.getNumber()+3}"></a>
-            </li>
-            <li th:if="${page.getTotalPages() > 5 && page.getNumber() >= page.getTotalPages() -3 }">
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=' + ${page.getTotalPages()-1} }" th:text="${page.getTotalPages()}"></a>
-            </li>
-
-
-            <li>
-                <a th:href="@{'../board/'+ ${board.getId()} + '?start=' + ${page.getTotalPages()-1}}" aria-label="Next">
+            <li th:if="${start} lt ${page.totalPages - 1}">
+                <a href="#" aria-label="Next" th:href="'/board/' + ${board.id} + '?start=' + ${page.totalPages - 1}">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -196,10 +147,6 @@
         </div>
         <div class="form-group">
             <textarea class="form-control" rows="5" id="content"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="file">上传文件</label>
-            <input type="file" id="file" multiple="multiple">
         </div>
         <input type="hidden" id="boardId" th:value="${board.id}"/>
         <button type="button" class="btn btn-primary" id="addTopic">发表</button>

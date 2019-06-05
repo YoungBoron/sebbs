@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.TreeSet;
 
 @Service
 public class ReplyService {
@@ -34,6 +35,18 @@ public class ReplyService {
         Pageable pageable = PageRequest.of(start, pagesize);
         var page = replyRepository.findByTopicOrderByFloorAsc(topic, pageable);
         model.addAttribute("page", page);
+        var pageNum = new TreeSet<Integer>();
+        for (int i = start; i >= 0 && i > start - 3; i--) {
+            pageNum.add(i);
+        }
+        for (int i = start; i < page.getTotalPages() && i < start + 5 && pageNum.size() <= 5; i++) {
+            pageNum.add(i);
+        }
+        for (int i = start - 3; i >= 0 & i > start - 5 && pageNum.size() <= 5; i--) {
+            pageNum.add(i);
+        }
+        model.addAttribute("pageNum", pageNum);
+        model.addAttribute("start", start);
     }
 
     public Result addReply(String content, Integer topicId, HttpServletRequest httpServletRequest) {

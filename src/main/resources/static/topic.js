@@ -12,8 +12,3 @@ $("#addReply").click(function() {
         //alert("数据: \n" + data + "\n状态: " + status);
     });
 });
-$(document).ready(function () {
-    var page = $("#page").val();
-    $(".pagination").find("a[href$='="+page+"']").parent().attr("class", "active");
-    $(".pagination").find("a[aria-label]").parent().attr("class", "");
-});
