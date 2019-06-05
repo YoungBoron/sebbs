@@ -81,25 +81,25 @@ public class UserService {
 
     public void courseManagement(Model model, HttpServletRequest httpServletRequest, Integer id){
         User user = (User) httpServletRequest.getSession().getAttribute("user");
-
+        user = userRepository.findById(user.getId()).get();
         if(user.getType().equals("teacher")){
 
-            Set<Course> courseSet = user.getCourseSet();
-            model.addAttribute("courseSet",courseSet);
+            var courseList = user.getCourseList();
+            model.addAttribute("courseList", courseList);
             if (id != -1){
                 Course course = courseRepository.getById(id);
-                Set<StudentCourse> studentCourseSet = course.getStudentCourses();
-                model.addAttribute("studentCourseSet",studentCourseSet);
+                var studentCourseList = course.getStudentCourseList();
+                model.addAttribute("studentCourseList", studentCourseList);
             }
 
 
-        }else if (user.getType().equals("student")){
-            Set<StudentCourse> studentCourseSet = user.getStudentCourses();
-            Set<Course> courseSet = new HashSet<>();
-            for (StudentCourse s: studentCourseSet){
-                courseSet.add(s.getCourse());
+        } else if (user.getType().equals("student")){
+            var studentCourseList = user.getStudentCourseList();
+            var courseList = new ArrayList<Course>();
+            for (StudentCourse s: studentCourseList){
+                courseList.add(s.getCourse());
             }
-            model.addAttribute("courseSet",courseSet);
+            model.addAttribute("courseList", courseList);
         }
 
     }

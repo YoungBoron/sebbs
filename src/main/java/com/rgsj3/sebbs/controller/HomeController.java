@@ -97,4 +97,16 @@ public class HomeController {
         //TODO 处理学生列表
         return "course";
     }
+
+    @RequestMapping("/homework/{id}")
+    public String homework(Model model,
+                           HttpServletRequest httpServletRequest,
+                           @PathVariable("id") Integer id) {
+        userService.loginUser(model, httpServletRequest);
+        if (httpServletRequest.getSession().getAttribute("user") == null) {
+            return "redirect:/home";
+        }
+        fileService.homework(model, httpServletRequest, id);
+        return "homework";
+    }
 }

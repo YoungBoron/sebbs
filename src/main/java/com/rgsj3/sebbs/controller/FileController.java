@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 @RestController
 public class FileController {
@@ -29,5 +30,21 @@ public class FileController {
     public String downLoadFile(HttpServletResponse response,
                            @PathVariable("id") Integer id) throws UnsupportedEncodingException {
         return fileService.downloadFile(response, id);
+    }
+
+    @RequestMapping("/add/homework")
+    public Result addHomework(@RequestParam("id") Integer id,
+                              @RequestParam("title") String title,
+                              @RequestParam("deadDate") String date,
+                              HttpServletRequest httpServletRequest) {
+        return fileService.addHomework(id, title, date, httpServletRequest);
+    }
+
+    @RequestMapping("/add/taskOrAssignment")
+    public Result addTaskOrAssignment(@RequestParam("file") MultipartFile multipartFile,
+                          @RequestParam("id") Integer id,
+                          @RequestParam("type") String type,
+                          HttpServletRequest httpServletRequest){
+        return fileService.addFile(multipartFile, id, type, httpServletRequest);
     }
 }

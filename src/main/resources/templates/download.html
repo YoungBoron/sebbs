@@ -94,7 +94,7 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col-md-6 col-xs-6">
-                    <a th:text="${file.name}" th:href="${'download/' + file.id}">文件名</a>
+                    <a th:text="${file.name}" th:href="${'/download/' + file.id}">文件名</a>
                 </div>
                 <div class="col-md-6 col-xs-6">
                     <p th:text="${file.path}">文件地址</p>

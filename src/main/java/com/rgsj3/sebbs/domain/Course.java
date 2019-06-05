@@ -2,6 +2,7 @@ package com.rgsj3.sebbs.domain;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,8 +26,8 @@ public class Course {
     @ManyToOne(targetEntity = User.class)
     private User teacher;
 
-    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
-    private Set<StudentCourse> studentCourses = new HashSet<>();
+    @OneToMany(targetEntity=StudentCourse.class, mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StudentCourse> studentCourseList;
 
     public Integer getId() {
         return id;
@@ -52,12 +53,12 @@ public class Course {
         this.teacher = teacher;
     }
 
-    public Set<StudentCourse> getStudentCourses() {
-        return studentCourses;
+    public List<StudentCourse> getStudentCourseList() {
+        return studentCourseList;
     }
 
-    public void setStudentCourses(Set<StudentCourse> studentCourses) {
-        this.studentCourses = studentCourses;
+    public void setStudentCourseList(List<StudentCourse> studentCourseList) {
+        this.studentCourseList = studentCourseList;
     }
 
     public Course() {

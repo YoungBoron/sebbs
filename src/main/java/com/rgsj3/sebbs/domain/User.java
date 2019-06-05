@@ -4,6 +4,7 @@ import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,11 +21,11 @@ public class User {
     private Integer power;
     private String type;
 
-    @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
-    private Set<Course> courseSet = new HashSet<>();
+    @OneToMany(targetEntity=Course.class, mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Course> courseList;
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
-    private Set<StudentCourse> studentCourses = new HashSet<>();
+    @OneToMany(targetEntity=StudentCourse.class, mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StudentCourse> studentCourseList;
 
     public String getNumber() {
         return number;
@@ -90,20 +91,20 @@ public class User {
         this.type = type;
     }
 
-    public Set<Course> getCourseSet() {
-        return courseSet;
+    public List<Course> getCourseList() {
+        return courseList;
     }
 
-    public void setCourseSet(Set<Course> courseSet) {
-        this.courseSet = courseSet;
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
     }
 
-    public Set<StudentCourse> getStudentCourses() {
-        return studentCourses;
+    public List<StudentCourse> getStudentCourseList() {
+        return studentCourseList;
     }
 
-    public void setStudentCourses(Set<StudentCourse> studentCourses) {
-        this.studentCourses = studentCourses;
+    public void setStudentCourseList(List<StudentCourse> studentCourseList) {
+        this.studentCourseList = studentCourseList;
     }
 
     public User() {
