@@ -132,13 +132,13 @@
                     <div class="card-body" >
                         <h4 class="card-title"><a th:text="${board.name}" th:href="'../board/' + ${board.id}">客户服务区</a></h4>
                         <p class="card-text" th:text="${board.description}">简介</p>
-                        <a href="#" class="card-link" data-toggle="modal" data-target="#updateModal" data-name="原版块名" th:attr="data-name=${board.name}, data-id=${board.id}, data-zoneid=${zone.id}, data-description=${board.description}">修改</a>
-                        <a href="#" class="card-lind" data-toggle="modal" data-target="#deleteModal" data-name="原版块名" th:attr="data-name=${board.name}, data-id=${board.id}">删除</a>
+                        <a href="#" class="card-link" data-toggle="modal" data-target="#updateModal" data-name="原版块名" th:if="${user != null} and ${user.type} eq 'admin'" th:attr="data-name=${board.name}, data-id=${board.id}, data-zoneid=${zone.id}, data-description=${board.description}">修改</a>
+                        <a href="#" class="card-lind" data-toggle="modal" data-target="#deleteModal" data-name="原版块名" th:if="${user != null} and ${user.type} eq 'admin'" th:attr="data-name=${board.name}, data-id=${board.id}">删除</a>
                     </div>
                 </div>
                 <br/>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" th:if="${user != null} and ${user.type} eq 'admin'">
                 <div class="card">
                     <div class="card-body" >
                         <a href="#" class="card-lind" data-toggle="modal" data-target="#addModal" th:attr="data-zoneid=${zone.id}">增加版块</a>
