@@ -86,4 +86,33 @@ public class TopicService {
             return Result.success();
         }
     }
+
+    public Result bestTopic(Integer id, HttpServletRequest httpServletRequest) {
+        var user = (User) httpServletRequest.getSession().getAttribute("user");
+        var topicOptional = topicRepository.findById(id);
+        if (user == null || !user.getType().equals("admin")) {
+            return Result.error(2, "不是管理员");
+        } else if (topicOptional.isEmpty()) {
+            return Result.error(3, "主题错误");
+        } else {
+            var topic = topicOptional.get();
+            topic.setBest(true);
+            topicRepository.save(topic);
+            return Result.success();
+        }
+    }
+
+    public Result deleteTopic(Integer id, HttpServletRequest httpServletRequest) {
+        var user = (User) httpServletRequest.getSession().getAttribute("user");
+        var topicOptional = topicRepository.findById(id);
+        if (user == null || !user.getType().equals("admin")) {
+            return Result.error(2, "不是管理员");
+        } else if (topicOptional.isEmpty()) {
+            return Result.error(3, "主题错误");
+        } else {
+            var topic = topicOptional.get();
+            topicRepository.delete(topic);
+            return Result.success();
+        }
+    }
 }

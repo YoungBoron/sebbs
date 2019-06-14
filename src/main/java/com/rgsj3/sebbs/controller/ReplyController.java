@@ -21,4 +21,10 @@ public class ReplyController {
                            HttpServletRequest httpServletRequest) {
         return replyService.addReply(content, topicId, httpServletRequest);
     }
+
+    @RequestMapping("/delete/reply")
+    public Result deleteTopic(@RequestParam("id") Integer id,
+                              HttpServletRequest httpServletRequest) {
+        return replyService.deleteReply(id, httpServletRequest);
+    }
 }

@@ -14,3 +14,39 @@ $("#addTopic").click(function() {
         //alert("数据: \n" + data + "\n状态: " + status);
     });
 });
+
+$('#bestModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    modal.find('input[name="id"]').val(button.data('id'));
+    modal.find('input[name="title"]').val(button.data('title'));
+});
+
+$("#best").click(function(){
+    $.post("/best/topic", $('#bestForm').serialize(), function(data) {
+        if (data.code == 0) {
+            alert("已加精");
+            location.reload()
+        } else {
+            alert(data.msg);
+        }
+    });
+});
+
+$('#deleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    modal.find('input[name="id"]').val(button.data('id'));
+    modal.find('input[name="title"]').val(button.data('title'));
+});
+
+$("#delete").click(function(){
+    $.post("/delete/topic", $('#deleteForm').serialize(), function(data) {
+        if (data.code == 0) {
+            //alert("");
+            location.reload()
+        } else {
+            alert(data.msg);
+        }
+    });
+});

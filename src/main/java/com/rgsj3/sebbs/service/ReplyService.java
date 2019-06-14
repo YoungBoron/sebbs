@@ -73,4 +73,18 @@ public class ReplyService {
             return Result.success();
         }
     }
+
+    public Result deleteReply(Integer id, HttpServletRequest httpServletRequest) {
+        var user = (User) httpServletRequest.getSession().getAttribute("user");
+        var replyOptional = replyRepository.findById(id);
+        if (user == null || !user.getType().equals("admin")) {
+            return Result.error(2, "不是管理员");
+        } else if (replyOptional.isEmpty()) {
+            return Result.error(3, "回复错误");
+        } else {
+            var reply = replyOptional.get();
+            replyRepository.delete(reply);
+            return Result.success();
+        }
+    }
 }
