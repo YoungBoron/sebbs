@@ -29,6 +29,12 @@ public class TopicController {
         return topicService.bestTopic(id, httpServletRequest);
     }
 
+    @RequestMapping("/up/topic")
+    public Result upTopic(@RequestParam("id") Integer id,
+                            HttpServletRequest httpServletRequest) {
+        return topicService.upTopic(id, httpServletRequest);
+    }
+
     @RequestMapping("/delete/topic")
     public Result deleteTopic(@RequestParam("id") Integer id,
                             HttpServletRequest httpServletRequest) {

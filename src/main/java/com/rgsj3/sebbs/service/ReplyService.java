@@ -9,6 +9,7 @@ import com.rgsj3.sebbs.repository.UserRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import javax.annotation.Resource;
@@ -49,6 +50,7 @@ public class ReplyService {
         model.addAttribute("start", start);
     }
 
+    @Transactional
     public Result addReply(String content, Integer topicId, HttpServletRequest httpServletRequest) {
         var user = (User) httpServletRequest.getSession().getAttribute("user");
         var topicOptional = topicRepository.findById(topicId);

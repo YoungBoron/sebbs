@@ -1,6 +1,7 @@
 package com.rgsj3.sebbs.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
@@ -8,6 +9,8 @@ public class Zone {
     @Id
     @GeneratedValue
     private Integer id;
+
+    @NotEmpty(message = "名字不能为空")
     private String name;
 
     @OneToMany(targetEntity=Board.class, mappedBy = "zone", cascade = CascadeType.ALL, orphanRemoval = true)

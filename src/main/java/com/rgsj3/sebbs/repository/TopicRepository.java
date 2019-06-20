@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TopicRepository extends JpaRepository<Topic, Integer> {
-    public List<Topic> findByBoardOrderByReplyDateDesc(Board board);
+    public List<Topic> findByBoardAndUpOrderByReplyDateDesc(Board board, Boolean up);
     public Page<Topic> findByBoardOrderByReplyDateDesc(Board board, Pageable pageable);
 }

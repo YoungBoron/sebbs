@@ -1,9 +1,8 @@
 package com.rgsj3.sebbs.domain;
 
-import org.springframework.data.annotation.Transient;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -13,8 +12,11 @@ public class Homework {
     @GeneratedValue
     private Integer id;
 
+    @NotEmpty(message = "标题为空")
     private String title;
     private Date createDate;
+
+    @NotNull(message = "截止时间为空")
     private Date deadDate;
 
     @OneToMany(targetEntity=File.class, mappedBy = "homework", cascade = CascadeType.ALL, orphanRemoval = true)

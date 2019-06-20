@@ -50,3 +50,57 @@ $("#delete").click(function(){
         }
     });
 });
+
+$('#unBestModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    modal.find('input[name="id"]').val(button.data('id'));
+    modal.find('input[name="title"]').val(button.data('title'));
+});
+
+$("#unBest").click(function(){
+    $.post("/best/topic", $('#unBestForm').serialize(), function(data) {
+        if (data.code == 0) {
+            alert("已撤精");
+            location.reload()
+        } else {
+            alert(data.msg);
+        }
+    });
+});
+
+$('#upModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    modal.find('input[name="id"]').val(button.data('id'));
+    modal.find('input[name="title"]').val(button.data('title'));
+});
+
+$("#up").click(function(){
+    $.post("/up/topic", $('#upForm').serialize(), function(data) {
+        if (data.code == 0) {
+            alert("已置顶");
+            location.reload()
+        } else {
+            alert(data.msg);
+        }
+    });
+});
+
+$('#unUpModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    modal.find('input[name="id"]').val(button.data('id'));
+    modal.find('input[name="title"]').val(button.data('title'));
+});
+
+$("#unUp").click(function(){
+    $.post("/up/topic", $('#unUpForm').serialize(), function(data) {
+        if (data.code == 0) {
+            alert("已撤顶");
+            location.reload()
+        } else {
+            alert(data.msg);
+        }
+    });
+});

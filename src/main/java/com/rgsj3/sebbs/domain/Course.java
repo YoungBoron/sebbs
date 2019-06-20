@@ -1,9 +1,8 @@
 package com.rgsj3.sebbs.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Course {
@@ -12,16 +11,8 @@ public class Course {
     @GeneratedValue
     private Integer id;
 
+    @NotEmpty(message = "名字不能为空")
     private String name;
-    private Integer stuNumber;
-
-    public Integer getStuNumber() {
-        return stuNumber;
-    }
-
-    public void setStuNumber(Integer stuNumber) {
-        this.stuNumber = stuNumber;
-    }
 
     @ManyToOne(targetEntity = User.class)
     private User teacher;

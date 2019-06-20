@@ -1,8 +1,7 @@
 package com.rgsj3.sebbs.domain;
 
-import com.mysql.cj.jdbc.Clob;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Entity
@@ -11,6 +10,7 @@ public class Reply {
     @GeneratedValue
     private Integer id;
 
+    @NotEmpty(message = "内容不能为空")
     @Lob
     private String content;
     private Date replyDate;

@@ -1,11 +1,9 @@
 package com.rgsj3.sebbs.domain;
 
-import org.hibernate.annotations.Fetch;
-
 import javax.persistence.*;
-import java.util.HashSet;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class User {
@@ -14,8 +12,14 @@ public class User {
     private Integer id;
 
     private String number;
+
+    @NotEmpty(message = "姓名不能为空")
     private String name;
+
+    @NotEmpty(message = "密码不能为空")
     private String password;
+
+    @Email(message = "邮箱错误")
     private String email;
     private String sex;
     private Integer power;

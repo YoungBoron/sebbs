@@ -7,9 +7,11 @@ import com.rgsj3.sebbs.domain.User;
 import com.rgsj3.sebbs.repository.BoardRepository;
 import com.rgsj3.sebbs.repository.ReplyRepository;
 import com.rgsj3.sebbs.repository.TopicRepository;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import javax.annotation.Resource;
@@ -32,6 +34,7 @@ public class TopicService {
 
     public void listTopic(Model model, Integer boardId, Integer start){
         var board = boardRepository.findById(boardId).get();
+        var upList = topicRepository.findByBoardAndUpOrderByReplyDateDesc(board, true);
         model.addAttribute("board", board);
 
         var pagesize = 10;
@@ -49,10 +52,12 @@ public class TopicService {
         for (int i = start - 3; i >= 0 & i > start - 5 && pageNum.size() <= 5; i--) {
             pageNum.add(i);
         }
+        model.addAttribute("upList", upList);
         model.addAttribute("pageNum", pageNum);
         model.addAttribute("start", start);
     }
 
+    @Transactional
     public Result addTopic(String title,
                            String content,
                            Integer boardId,
@@ -75,6 +80,8 @@ public class TopicService {
             topic.setReplyUser(user);
             topic.setFloor(1);
             topic.setClick(0);
+            topic.setBest(false);
+            topic.setUp(false);
             topicRepository.save(topic);
             var reply = new Reply();
             reply.setContent(content);
@@ -96,7 +103,22 @@ public class TopicService {
             return Result.error(3, "主题错误");
         } else {
             var topic = topicOptional.get();
-            topic.setBest(true);
+            topic.setBest(!topic.getBest());
+            topicRepository.save(topic);
+            return Result.success();
+        }
+    }
+
+    public Result upTopic(Integer id, HttpServletRequest httpServletRequest) {
+        var user = (User) httpServletRequest.getSession().getAttribute("user");
+        var topicOptional = topicRepository.findById(id);
+        if (user == null || !user.getType().equals("admin")) {
+            return Result.error(2, "不是管理员");
+        } else if (topicOptional.isEmpty()) {
+            return Result.error(3, "主题错误");
+        } else {
+            var topic = topicOptional.get();
+            topic.setUp(!topic.getUp());
             topicRepository.save(topic);
             return Result.success();
         }
