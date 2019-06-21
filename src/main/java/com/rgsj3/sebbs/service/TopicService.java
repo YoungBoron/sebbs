@@ -7,7 +7,6 @@ import com.rgsj3.sebbs.domain.User;
 import com.rgsj3.sebbs.repository.BoardRepository;
 import com.rgsj3.sebbs.repository.ReplyRepository;
 import com.rgsj3.sebbs.repository.TopicRepository;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import org.springframework.ui.Model;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeSet;
 

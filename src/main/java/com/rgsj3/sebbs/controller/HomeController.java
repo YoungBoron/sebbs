@@ -31,6 +31,9 @@ public class HomeController {
     @Resource
     FileService fileService;
 
+    @Resource
+    LogService logService;
+
     @RequestMapping("/home")
     public String home(Model model,
                        HttpServletRequest httpServletRequest) {
@@ -108,5 +111,27 @@ public class HomeController {
         }
         fileService.homework(model, httpServletRequest, id);
         return "homework";
+    }
+
+    @RequestMapping("/log")
+    public String log(Model model,
+                      HttpServletRequest httpServletRequest) {
+        userService.loginUser(model, httpServletRequest);
+        if (httpServletRequest.getSession().getAttribute("user") == null) {
+            return "redirect:/home";
+        }
+        logService.listLog(model, httpServletRequest);
+        return "log";
+    }
+
+    @RequestMapping("/user")
+    public String user(Model model,
+                      HttpServletRequest httpServletRequest) {
+        userService.loginUser(model, httpServletRequest);
+        if (httpServletRequest.getSession().getAttribute("user") == null) {
+            return "redirect:/home";
+        }
+        userService.listUser(model, httpServletRequest);
+        return "user";
     }
 }

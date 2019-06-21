@@ -1,5 +1,6 @@
 package com.rgsj3.sebbs.controller;
 
+import com.rgsj3.sebbs.aspect.LogAnnotation;
 import com.rgsj3.sebbs.domain.Result;
 import com.rgsj3.sebbs.service.ReplyService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ public class ReplyController {
     ReplyService replyService;
 
     @RequestMapping("/add/reply")
+    @LogAnnotation(description="回贴")
     public Result addReply(@RequestParam("content") String content,
                            @RequestParam("topicId") Integer topicId,
                            HttpServletRequest httpServletRequest) {

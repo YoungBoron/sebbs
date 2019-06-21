@@ -1,5 +1,6 @@
 package com.rgsj3.sebbs.controller;
 
+import com.rgsj3.sebbs.aspect.LogAnnotation;
 import com.rgsj3.sebbs.domain.Result;
 import com.rgsj3.sebbs.service.TopicService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ public class TopicController {
     TopicService topicService;
 
     @RequestMapping("/add/topic")
+    @LogAnnotation(description="发贴")
     public Result addTopic(@RequestParam("title") String title,
                            @RequestParam("content") String content,
                            @RequestParam("boardId") Integer boardId,

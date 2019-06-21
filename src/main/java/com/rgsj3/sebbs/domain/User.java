@@ -13,7 +13,7 @@ public class User {
 
     private String number;
 
-    @NotEmpty(message = "姓名不能为空")
+    @NotEmpty(message = "名字不能为空")
     private String name;
 
     @NotEmpty(message = "密码不能为空")
@@ -24,6 +24,7 @@ public class User {
     private String sex;
     private Integer power;
     private String type;
+    private Boolean ban;
 
     @OneToMany(targetEntity=Course.class, mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Course> courseList;
@@ -112,5 +113,13 @@ public class User {
     }
 
     public User() {
+    }
+
+    public Boolean getBan() {
+        return ban;
+    }
+
+    public void setBan(Boolean ban) {
+        this.ban = ban;
     }
 }

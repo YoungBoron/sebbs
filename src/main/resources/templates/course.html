@@ -24,6 +24,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="/download">资料下载</a>
             </li>
+            <li class="nav-item" th:if="${user != null} and ${user.type} eq 'admin'">
+                <a class="nav-link" href="/log">日志管理</a>
+            </li>
+            <li class="nav-item" th:if="${user != null} and ${user.type} eq 'admin'">
+                <a class="nav-link" href="/user">用户管理</a>
+            </li>
         </ul>
         <button class="btn btn-primary" type="button"
                 data-toggle="modal" data-target="#myModal"

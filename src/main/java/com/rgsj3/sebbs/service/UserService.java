@@ -114,4 +114,9 @@ public class UserService {
             return Result.error(1,"修改出错");
     }
 
+    public void listUser(Model model, HttpServletRequest httpServletRequest) {
+        var userList = userRepository.findAll();
+        model.addAttribute("userList", userList);
+    }
+
 }

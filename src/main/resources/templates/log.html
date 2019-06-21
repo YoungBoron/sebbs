@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>个人信息</title>
+    <title>日志管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
@@ -25,7 +25,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/download">资料下载</a>
             </li>
-            <li class="nav-item" th:if="${user != null} and ${user.type} eq 'admin'">
+            <li class="nav-item active" th:if="${user != null} and ${user.type} eq 'admin'">
                 <a class="nav-link" href="/log">日志管理</a>
             </li>
             <li class="nav-item" th:if="${user != null} and ${user.type} eq 'admin'">
@@ -88,44 +88,36 @@
         </div>
     </div>
 </div>
-<br/>
-<div class="container">
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link active" href="/self">个人信息</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/course">课程</a>
-        </li>
-    </ul>
 
-    <br/>
-    <form>
-        <div class="form-group">
-            <label>学工号</label>
-                <p class="form-control-static" th:text="${user.number}">123456</p>
-        </div>
-        <div class="form-group">
-            <label for="userName">姓名</label>
-            <input type="text" class="form-control" id="userName" placeholder="姓名" th:value="${user.name}">
-        </div>
-        <div class="form-group">
-            <label for="userEmail">电子邮箱</label>
-            <input type="email" class="form-control" id="userEmail" placeholder="电子邮箱" th:value="${user.email}">
-        </div>
-        <div class="form-group">
-            <label for="userPassword">密码</label>
-            <input type="password" class="form-control" id="userPassword" placeholder="密码不改就留空">
-        </div>
-        <div class="form-group">
-            <label for="userPassword2">重复密码</label>
-            <input type="password" class="form-control" id="userPassword2" placeholder="密码不改就留空">
-        </div>
-        <button type="button" class="btn btn-info" id="submitUserInfo">提交</button>
-    </form>
+<br/>
+
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">序号</th>
+            <th scope="col">描述</th>
+            <th scope="col">地址</th>
+            <th scope="col">方法</th>
+            <th scope="col">参数</th>
+            <th scope="col">时间</th>
+            <th scope="col">用户</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="log : ${logList}">
+            <th scope="row" th:text="${log.id}">1</th>
+            <td th:text="${log.description}">描述</td>
+            <td th:text="${log.ip}">地址</td>
+            <td th:text="${log.method}">方法</td>
+            <td th:text="${log.params}">参数</td>
+            <td th:text="${log.time}">时间</td>
+            <td th:text="${log.userName}">用户</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <script src="/home.js"></script>
-<script src="/self.js"></script>
 </body>
 </html>
