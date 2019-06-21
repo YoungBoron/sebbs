@@ -56,3 +56,18 @@ $("#unBan").click(function(){
         //alert("数据: \n" + data + "\n状态: " + status);
     });
 });
+
+$('#addModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget)
+    var modal = $(this)
+});
+$("#add").click(function(){
+    $.post("/add/user", $('#addForm').serialize(), function(data) {
+        if (data.code == 0) {
+            alert("增加成功");
+            location.reload()
+        } else {
+            alert(data.msg);
+        }
+    });
+});

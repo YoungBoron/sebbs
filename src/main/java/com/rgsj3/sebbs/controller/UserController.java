@@ -70,4 +70,12 @@ public class UserController {
         return userService.banUser(id);
     }
 
+    @RequestMapping("/add/user")
+    public Result addUser(@RequestParam("number") String number,
+                             @RequestParam("name") String name,
+                             @RequestParam("password") String password,
+                             @RequestParam("type") String type) {
+        return userService.addUser(number, name, password, type);
+    }
+
 }

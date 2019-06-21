@@ -137,14 +137,14 @@
 
     <br/>
 
-    <form th:if="${user == null}">
+    <form th:if="${user == null} or ${user.ban == true}">
         <div class="form-group">
             <label>回复</label>
             <textarea class="form-control" rows="5" disabled></textarea>
         </div>
         <button type="submit" class="btn btn-primary" disabled>回复</button>
     </form>
-    <form th:if="${user != null}">
+    <form th:if="${user != null} and ${user.ban == false}">
         <div class="form-group">
             <label>回复</label>
             <textarea class="form-control" rows="5" id="content"></textarea>

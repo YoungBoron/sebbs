@@ -58,7 +58,9 @@ public class UserService {
     public void loginUser(Model model, HttpServletRequest httpServletRequest) {
         var session = httpServletRequest.getSession();
         if (session.getAttribute("user") != null) {
-            model.addAttribute("user", session.getAttribute("user"));
+            var user = (User)session.getAttribute("user");
+            user = userRepository.findById(user.getId()).get();
+            model.addAttribute("user", user);
         } else {
             model.addAttribute("user", null);
         }
@@ -147,6 +149,20 @@ public class UserService {
         }
         var user = userOptional.get();
         user.setBan(!user.getBan());
+        userRepository.save(user);
+        return Result.success();
+    }
+
+    public Result addUser(String number,
+                             String name,
+                             String password,
+                             String type) {
+        var user = new User();
+        user.setNumber(number);
+        user.setName(name);
+        user.setPassword(password);
+        user.setType(type);
+        user.setBan(false);
         userRepository.save(user);
         return Result.success();
     }

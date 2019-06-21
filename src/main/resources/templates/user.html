@@ -92,6 +92,9 @@
 <br/>
 
 <div class="container">
+    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addModal">增加用户</a>
+    <br/>
+    <br/>
     <table class="table table-striped table-hover">
         <thead>
         <tr>
@@ -234,6 +237,56 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary" id="unBan">解禁</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- AddModal -->
+<div class="modal fade" id="addModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">增加用户</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <form method="post" id="addForm">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" name="name"
+                               class="form-control" placeholder="用户名" />
+                    </div>
+                    <div class="form-group">
+                        <label>用户密码</label>
+                        <input type="password" name="password"
+                               class="form-control" placeholder="用户密码" />
+                    </div>
+                    <div class="form-group">
+                        <label>学工号</label>
+                        <input type="text" name="number"
+                               class="form-control" placeholder="学工号" />
+                    </div>
+                    <div class="form-group">
+                        <label>用户类型</label>
+                        <select class="form-control" name="type">
+                            <option value="student">学生</option>
+                            <option value="teacher">教师</option>
+                            <option value="admin">管理员</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="add">增加</button>
             </div>
 
         </div>
