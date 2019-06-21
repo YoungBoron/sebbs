@@ -101,6 +101,7 @@
             <th scope="col">邮箱</th>
             <th scope="col">类型</th>
             <th scope="col">禁言</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -112,11 +113,134 @@
             <td th:text="${user.type}">类型</td>
             <td th:if="${user.ban}">是</td>
             <td th:if="${!user.ban}">否</td>
+            <td>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#updateModal" th:attr="data-name=${user.name}, data-id=${user.id}, data-number=${user.number}, data-password=${user.password}, data-type=${user.type}">修改</a>
+                <a th:if="${!user.ban}" href="#" class="btn btn-secondary" data-toggle="modal" data-target="#banModal" th:attr="data-name=${user.name}, data-id=${user.id}, data-number=${user.number}, data-password=${user.password}, data-type=${user.type}">禁言</a>
+                <a th:if="${user.ban}" href="#" class="btn btn-success" data-toggle="modal" data-target="#unBanModal" th:attr="data-name=${user.name}, data-id=${user.id}, data-number=${user.number}, data-password=${user.password}, data-type=${user.type}">解禁</a>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
 
+<!-- UpdateModal -->
+<div class="modal fade" id="updateModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">修改用户</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <form method="post" id="updateForm">
+                    <input type="hidden" name="id"/>
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" name="name"
+                               class="form-control" placeholder="用户名" />
+                    </div>
+                    <div class="form-group">
+                        <label>用户密码</label>
+                        <input type="password" name="password"
+                               class="form-control" placeholder="用户密码" />
+                    </div>
+                    <div class="form-group">
+                        <label>学工号</label>
+                        <input type="text" name="number"
+                               class="form-control" placeholder="学工号" />
+                    </div>
+                    <div class="form-group">
+                        <label>用户类型</label>
+                        <select class="form-control" name="type">
+                            <option value="student">学生</option>
+                            <option value="teacher">教师</option>
+                            <option value="admin">管理员</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="update">修改</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- BanModal -->
+<div class="modal fade" id="banModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">禁言</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <form method="post" id="banForm">
+                    <input type="hidden" name="id"/>
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" name="name" readonly
+                               class="form-control-plaintext" placeholder="用户名" />
+                    </div>
+                </form>
+            </div>
+
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="ban">禁言</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- UnBanModal -->
+<div class="modal fade" id="unBanModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">解禁</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <form method="post" id="unBanForm">
+                    <input type="hidden" name="id"/>
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" name="name" readonly
+                               class="form-control-plaintext" placeholder="用户名" />
+                    </div>
+                </form>
+            </div>
+
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="unBan">解禁</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script src="/home.js"></script>
+<script src="/user.js"></script>
 </body>
 </html>

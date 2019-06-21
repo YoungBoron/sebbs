@@ -1,6 +1,7 @@
 package com.rgsj3.sebbs.controller;
 
 import com.rgsj3.sebbs.domain.Result;
+import com.rgsj3.sebbs.domain.User;
 import com.rgsj3.sebbs.service.UserService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Map;
 
 
@@ -52,6 +54,20 @@ public class UserController {
                            @RequestParam("score") Double score,
                            HttpServletRequest httpServletRequest){
         return userService.setScore(id,score);
+    }
+
+    @RequestMapping("/update/user")
+    public Result updateUser(@RequestParam("id") Integer id,
+                             @RequestParam("number") String number,
+                             @RequestParam("name") String name,
+                             @RequestParam("password") String password,
+                             @RequestParam("type") String type) {
+        return userService.updateUser(id, number, name, password, type);
+    }
+
+    @RequestMapping("/ban/user")
+    public Result banUser(@RequestParam("id") Integer id) {
+        return userService.banUser(id);
     }
 
 }

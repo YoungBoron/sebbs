@@ -119,4 +119,32 @@ public class UserService {
         model.addAttribute("userList", userList);
     }
 
+    public Result updateUser(Integer id,
+                             String number,
+                             String name,
+                             String password,
+                             String type) {
+        var userOptional =  userRepository.findById(id);
+        if (userOptional.isEmpty()) {
+            return Result.error(2, "用户不存在");
+        }
+        var user = userOptional.get();
+        user.setNumber(number);
+        user.setName(name);
+        user.setPassword(password);
+        user.setType(type);
+        userRepository.save(user);
+        return Result.success();
+    }
+
+    public Result banUser(Integer id) {
+        var userOptional =  userRepository.findById(id);
+        if (userOptional.isEmpty()) {
+            return Result.error(2, "用户不存在");
+        }
+        var user = userOptional.get();
+        user.setBan(!user.getBan());
+        userRepository.save(user);
+        return Result.success();
+    }
 }
