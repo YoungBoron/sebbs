@@ -96,10 +96,13 @@ public class UserService {
         } else if (user.getType().equals("student")){
             var studentCourseList = user.getStudentCourseList();
             var courseList = new ArrayList<Course>();
+            var chooseCourseList = courseRepository.findAll();
             for (StudentCourse s: studentCourseList){
                 courseList.add(s.getCourse());
+                chooseCourseList.remove(s.getCourse());
             }
             model.addAttribute("courseList", courseList);
+            model.addAttribute("chooseCourseList", chooseCourseList);
         }
 
     }

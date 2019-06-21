@@ -113,6 +113,24 @@
             </div>
             <br/>
         </div>
+        <div class="col-md-4" th:if="${user.type} eq 'student'" th:each="course : ${chooseCourseList}">
+            <div class="card">
+                <div class="card-body" >
+                    <h4 class="card-title" th:text="${course.name}">班级名</h4>
+                    <p th:if="${user.type} eq 'student'" class="card-text" th:text="${course.teacher.name}">老师名字</p>
+                    <a href="#" class="card-link" data-toggle="modal" data-target="#joinModal" th:attr="data-name=${course.name}, data-id=${course.id}">加入课程</a>
+                </div>
+            </div>
+            <br/>
+        </div>
+        <div class="col-md-4" th:if="${user.type} eq 'teacher'">
+            <div class="card">
+                <div class="card-body" >
+                    <a href="#" class="card-lind" data-toggle="modal" data-target="#addModal">增加新课程</a>
+                </div>
+            </div>
+            <br/>
+        </div>
         <div class="col-md-4" th:if="${false}">
             <div class="card">
                 <div class="card-body">简单的卡片</div>
@@ -161,6 +179,71 @@
         </tr>
         </tbody>
     </table>
+</div>
+
+<!-- JoinModal -->
+<div class="modal fade" id="joinModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">加入课程</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <form method="post" id="joinForm">
+                    <input type="hidden" name="id"/>
+                    <div class="form-group">
+                        <label>课程名</label>
+                        <input type="text" name="name" readonly
+                               class="form-control-plaintext" placeholder="课程名" />
+                    </div>
+                </form>
+            </div>
+
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="join">加入</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- AddModal -->
+<div class="modal fade" id="addModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">增加新课程</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <form method="post" id="addForm">
+                    <div class="form-group">
+                        <label>课程名</label>
+                        <input type="text" name="name"
+                               class="form-control" placeholder="课程名" />
+                    </div>
+                </form>
+            </div>
+
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="add">增加</button>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <script src="/home.js"></script>
