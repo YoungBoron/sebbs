@@ -90,7 +90,7 @@
 </div>
 
 <div class="container">
-    <ul class="list-group" th:each="file : ${fileList}">
+    <ul class="list-group" th:each="file : ${fileList}" th:if="${file.type} eq 'task'">
         <li class="list-group-item">
             <div class="row">
                 <div class="col-md-6 col-xs-6">

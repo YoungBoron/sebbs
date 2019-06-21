@@ -34,6 +34,9 @@ public class HomeController {
     @Resource
     LogService logService;
 
+    @Resource
+    MessageService messageService;
+
     @RequestMapping("/home")
     public String home(Model model,
                        HttpServletRequest httpServletRequest) {
@@ -133,5 +136,16 @@ public class HomeController {
         }
         userService.listUser(model, httpServletRequest);
         return "user";
+    }
+
+    @RequestMapping("/message")
+    public String message(Model model,
+                       HttpServletRequest httpServletRequest) {
+        userService.loginUser(model, httpServletRequest);
+        if (httpServletRequest.getSession().getAttribute("user") == null) {
+            return "redirect:/home";
+        }
+        messageService.listMessage(model, httpServletRequest);
+        return "message";
     }
 }

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
+<!--suppress ALL-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>日志管理</title>
+    <title>私信</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -25,7 +26,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/download">资料下载</a>
             </li>
-            <li class="nav-item active" th:if="${user != null} and ${user.type} eq 'admin'">
+            <li class="nav-item" th:if="${user != null} and ${user.type} eq 'admin'">
                 <a class="nav-link" href="/log">日志管理</a>
             </li>
             <li class="nav-item" th:if="${user != null} and ${user.type} eq 'admin'">
@@ -92,33 +93,35 @@
 
 <br/>
 
+
 <div class="container">
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">序号</th>
-            <th scope="col">描述</th>
-            <th scope="col">地址</th>
-            <th scope="col">方法</th>
-            <th scope="col">参数</th>
-            <th scope="col">时间</th>
-            <th scope="col">用户</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="log : ${logList}">
-            <th scope="row" th:text="${log.id}">1</th>
-            <td th:text="${log.description}">描述</td>
-            <td th:text="${log.ip}">地址</td>
-            <td th:text="${log.method}">方法</td>
-            <td th:text="${log.params}">参数</td>
-            <td th:text="${log.time}">时间</td>
-            <td th:text="${log.userName}">用户</td>
-        </tr>
-        </tbody>
-    </table>
+    <br/>
+
+    <div class="card" th:each="message : ${messageList}">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${message.fromUser.name} + '→' + ${message.toUser.name}">用户名</h5>
+            <h6 class="card-subtitle mb-2 text-muted" th:text="${#dates.format(message.date, 'yyyy-MM-dd')}">私信时间</h6>
+            <p class="card-text" th:text="${message.content}">回复内容</p>
+        </div>
+    </div>
+
+    <form id="addMessageForm">
+        <div class="form-group">
+            <label>私信</label>
+            <textarea class="form-control" rows="5" name="content"></textarea>
+        </div>
+        <div class="form-group">
+            <label>用户</label>
+            <select class="form-control" name="id">
+                <option th:each="user1 : ${userList}" th:if="${user.id != user1.id}" th:value="${user1.id}" th:text="${user1.name}">1</option>
+            </select>
+        </div>
+        <button type="button" class="btn btn-primary" id="addMessage">回复</button>
+    </form>
+
 </div>
 
 <script src="/home.js"></script>
+<script src="/message.js"></script>
 </body>
 </html>
