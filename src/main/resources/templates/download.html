@@ -97,18 +97,18 @@
                     <a th:text="${file.name}" th:href="${'/download/' + file.id}">文件名</a>
                 </div>
                 <div class="col-md-6 col-xs-6">
-                    <p th:text="${file.path}">文件地址</p>
+                    <p th:text="${file.user.name}">上传用户</p>
                 </div>
             </div>
         </li>
     </ul>
-    <form id="addFileForm">
+    <!--<form id="addFileForm">
         <div class="form-group">
             <label for="file">上传文件</label>
             <input type="file" id="file" name="file"/>
         </div>
         <button type="button" class="btn btn-default" id="addFile">上传</button>
-    </form>
+    </form>-->
 </div>
 
 <script
