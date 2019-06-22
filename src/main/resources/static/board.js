@@ -104,3 +104,39 @@ $("#unUp").click(function(){
         }
     });
 });
+
+$('#announcementModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    modal.find('input[name="id"]').val(button.data('id'));
+    modal.find('input[name="title"]').val(button.data('title'));
+});
+
+$("#announcement").click(function(){
+    $.post("/announcement/topic", $('#announcementForm').serialize(), function(data) {
+        if (data.code == 0) {
+            alert("已公告");
+            location.reload()
+        } else {
+            alert(data.msg);
+        }
+    });
+});
+
+$('#unAnnouncementModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+    modal.find('input[name="id"]').val(button.data('id'));
+    modal.find('input[name="title"]').val(button.data('title'));
+});
+
+$("#unAnnouncement").click(function(){
+    $.post("/announcement/topic", $('#unAnnouncementForm').serialize(), function(data) {
+        if (data.code == 0) {
+            alert("已取消公告");
+            location.reload()
+        } else {
+            alert(data.msg);
+        }
+    });
+});

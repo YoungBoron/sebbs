@@ -32,6 +32,7 @@ public class TopicService {
 
     public void listTopic(Model model, Integer boardId, Integer start){
         var board = boardRepository.findById(boardId).get();
+        var announcementList = topicRepository.findByAnnouncementOrderByReplyDateDesc(true);
         var upList = topicRepository.findByBoardAndUpOrderByReplyDateDesc(board, true);
         model.addAttribute("board", board);
 
@@ -50,6 +51,7 @@ public class TopicService {
         for (int i = start - 3; i >= 0 & i > start - 5 && pageNum.size() <= 5; i--) {
             pageNum.add(i);
         }
+        model.addAttribute("announcementList", announcementList);
         model.addAttribute("upList", upList);
         model.addAttribute("pageNum", pageNum);
         model.addAttribute("start", start);
@@ -80,6 +82,7 @@ public class TopicService {
             topic.setClick(0);
             topic.setBest(false);
             topic.setUp(false);
+            topic.setAnnouncement(false);
             topicRepository.save(topic);
             var reply = new Reply();
             reply.setContent(content);
@@ -117,6 +120,21 @@ public class TopicService {
         } else {
             var topic = topicOptional.get();
             topic.setUp(!topic.getUp());
+            topicRepository.save(topic);
+            return Result.success();
+        }
+    }
+
+    public Result announcementTopic(Integer id, HttpServletRequest httpServletRequest) {
+        var user = (User) httpServletRequest.getSession().getAttribute("user");
+        var topicOptional = topicRepository.findById(id);
+        if (user == null || !user.getType().equals("admin")) {
+            return Result.error(2, "不是管理员");
+        } else if (topicOptional.isEmpty()) {
+            return Result.error(3, "主题错误");
+        } else {
+            var topic = topicOptional.get();
+            topic.setAnnouncement(!topic.getAnnouncement());
             topicRepository.save(topic);
             return Result.success();
         }

@@ -37,6 +37,12 @@ public class TopicController {
         return topicService.upTopic(id, httpServletRequest);
     }
 
+    @RequestMapping("/announcement/topic")
+    public Result announcementTopic(@RequestParam("id") Integer id,
+                          HttpServletRequest httpServletRequest) {
+        return topicService.announcementTopic(id, httpServletRequest);
+    }
+
     @RequestMapping("/delete/topic")
     public Result deleteTopic(@RequestParam("id") Integer id,
                             HttpServletRequest httpServletRequest) {

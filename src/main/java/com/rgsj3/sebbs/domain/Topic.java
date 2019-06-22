@@ -20,6 +20,7 @@ public class Topic {
     private Integer click;
     private Boolean best;
     private Boolean up;
+    private Boolean announcement;
 
     @ManyToOne(targetEntity = User.class)
     private User user;
@@ -130,5 +131,13 @@ public class Topic {
 
     public void setUp(Boolean up) {
         this.up = up;
+    }
+
+    public Boolean getAnnouncement() {
+        return announcement;
+    }
+
+    public void setAnnouncement(Boolean announcement) {
+        this.announcement = announcement;
     }
 }

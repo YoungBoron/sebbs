@@ -103,24 +103,45 @@
 
     <br/>
 
-    <div class="card" th:each="topic : ${upList}">
+    <div class="card" th:each="topic : ${announcementList}">
         <div class="card-body">
-            <h5 class="card-title"><a th:text="${topic.title}" th:href="'/topic/' + ${topic.id}">主题</a><span class="badge badge-success" th:if="${topic.best}">精品</span><span class="badge badge-info">置顶</span></h5>
+            <h5 class="card-title"><a th:text="${topic.title}" th:href="'/topic/' + ${topic.id}">主题</a><span class="badge badge-success" th:if="${topic.best}">精品</span><span class="badge badge-info" th:if="${topic.up}">置顶</span><span class="badge badge-primary" th:if="${topic.announcement}">公告</span></h5>
             <h6 class="card-subtitle mb-2 text-muted" th:text="${topic.user.name}">作者</h6>
             <p class="card-text"><small class="text-muted" th:text="'最后回复:' + ${#dates.format(topic.replyDate, 'yyyy-MM-dd')}">最后回复时间</small></p>
-            <a href="#" class="card-lind" data-toggle="modal" data-target="#unUpModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin'" th:attr="data-title=${topic.title}, data-id=${topic.id}">撤顶</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#announcementModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${!topic.announcement}" th:attr="data-title=${topic.title}, data-id=${topic.id}">公告</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#unAnnouncementModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${topic.announcement}" th:attr="data-title=${topic.title}, data-id=${topic.id}">取消公告</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#unUpModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${topic.up}" th:attr="data-title=${topic.title}, data-id=${topic.id}">撤顶</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#upModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${!topic.up}" th:attr="data-title=${topic.title}, data-id=${topic.id}">置顶</a>
             <a href="#" class="card-lind" data-toggle="modal" data-target="#bestModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${!topic.best}" th:attr="data-title=${topic.title}, data-id=${topic.id}">加精</a>
             <a href="#" class="card-lind" data-toggle="modal" data-target="#unBestModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${topic.best}" th:attr="data-title=${topic.title}, data-id=${topic.id}">撤精</a>
             <a href="#" class="card-lind" data-toggle="modal" data-target="#deleteModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin'" th:attr="data-title=${topic.title}, data-id=${topic.id}">删除</a>
         </div>
     </div>
 
-    <div class="card" th:each="topic : ${page.getContent()}" th:if="${!topic.up}">
+    <div class="card" th:each="topic : ${upList}" th:if="${!topic.announcement}">
+        <div class="card-body">
+            <h5 class="card-title"><a th:text="${topic.title}" th:href="'/topic/' + ${topic.id}">主题</a><span class="badge badge-success" th:if="${topic.best}">精品</span><span class="badge badge-info">置顶</span></h5>
+            <h6 class="card-subtitle mb-2 text-muted" th:text="${topic.user.name}">作者</h6>
+            <p class="card-text"><small class="text-muted" th:text="'最后回复:' + ${#dates.format(topic.replyDate, 'yyyy-MM-dd')}">最后回复时间</small></p>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#announcementModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${!topic.announcement}" th:attr="data-title=${topic.title}, data-id=${topic.id}">公告</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#unAnnouncementModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${topic.announcement}" th:attr="data-title=${topic.title}, data-id=${topic.id}">取消公告</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#unUpModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${topic.up}" th:attr="data-title=${topic.title}, data-id=${topic.id}">撤顶</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#upModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${!topic.up}" th:attr="data-title=${topic.title}, data-id=${topic.id}">置顶</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#bestModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${!topic.best}" th:attr="data-title=${topic.title}, data-id=${topic.id}">加精</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#unBestModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${topic.best}" th:attr="data-title=${topic.title}, data-id=${topic.id}">撤精</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#deleteModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin'" th:attr="data-title=${topic.title}, data-id=${topic.id}">删除</a>
+        </div>
+    </div>
+
+    <div class="card" th:each="topic : ${page.getContent()}" th:if="${!topic.up} and ${!topic.announcement}">
         <div class="card-body">
             <h5 class="card-title"><a th:text="${topic.title}" th:href="'/topic/' + ${topic.id}">主题</a><span class="badge badge-success" th:if="${topic.best}">精品</span></h5>
             <h6 class="card-subtitle mb-2 text-muted" th:text="${topic.user.name}">作者</h6>
             <p class="card-text"><small class="text-muted" th:text="'最后回复:' + ${#dates.format(topic.replyDate, 'yyyy-MM-dd')}">最后回复时间</small></p>
-            <a href="#" class="card-lind" data-toggle="modal" data-target="#upModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin'" th:attr="data-title=${topic.title}, data-id=${topic.id}">置顶</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#announcementModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${!topic.announcement}" th:attr="data-title=${topic.title}, data-id=${topic.id}">公告</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#unAnnouncementModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${topic.announcement}" th:attr="data-title=${topic.title}, data-id=${topic.id}">取消公告</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#unUpModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${topic.up}" th:attr="data-title=${topic.title}, data-id=${topic.id}">撤顶</a>
+            <a href="#" class="card-lind" data-toggle="modal" data-target="#upModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${!topic.up}" th:attr="data-title=${topic.title}, data-id=${topic.id}">置顶</a>
             <a href="#" class="card-lind" data-toggle="modal" data-target="#bestModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${!topic.best}" th:attr="data-title=${topic.title}, data-id=${topic.id}">加精</a>
             <a href="#" class="card-lind" data-toggle="modal" data-target="#unBestModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin' and ${topic.best}" th:attr="data-title=${topic.title}, data-id=${topic.id}">撤精</a>
             <a href="#" class="card-lind" data-toggle="modal" data-target="#deleteModal" data-name="主题名" th:if="${user != null} and ${user.type} eq 'admin'" th:attr="data-title=${topic.title}, data-id=${topic.id}">删除</a>
@@ -297,6 +318,72 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-primary" id="unUp">撤顶</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- AnnouncementModal -->
+    <div class="modal fade" id="announcementModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">公告</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <form method="post" id="announcementForm">
+                        <input type="hidden" name="id"/>
+                        <div class="form-group">
+                            <label>主题名</label>
+                            <input type="text" name="title" readonly
+                                   class="form-control-plaintext" placeholder="主题名" />
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="announcement">公告</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- UnAnnouncementModal -->
+    <div class="modal fade" id="unAnnouncementModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">取消公告</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <form method="post" id="unAnnouncementForm">
+                        <input type="hidden" name="id"/>
+                        <div class="form-group">
+                            <label>主题名</label>
+                            <input type="text" name="title" readonly
+                                   class="form-control-plaintext" placeholder="主题名" />
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="unAnnouncement">取消公告</button>
                 </div>
 
             </div>
